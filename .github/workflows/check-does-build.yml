@@ -30,13 +30,20 @@ jobs:
       - name: Build Voxyrium
         run: ./gradlew -I init.gradle build
 
-      - name: Find JAR files
-        run: find . -type f -name "*.jar" -not -path "./.gradle/*" -print
+      - name: Find generated JAR files
+        run: |
+          echo "=== All generated JAR files ==="
+          find . -type f -name "*.jar" \
+            -not -path "./.gradle/*" \
+            -not -path "./*/.gradle/*" \
+            -print
+          echo "=== Build directories ==="
+          find . -type d -name build -print
 
-      - name: Upload build outputs
+      - name: Upload generated JAR files
         uses: actions/upload-artifact@v4
         with:
           name: voxyrium-build-test
           path: |
-            **/build/libs/*.jar
+            **/build/**/*.jar
           if-no-files-found: error

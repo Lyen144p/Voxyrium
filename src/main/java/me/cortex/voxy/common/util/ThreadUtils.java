@@ -29,7 +29,7 @@ public class ThreadUtils {
             try {
                 var libc = APIUtil.apiCreateLibrary("libc.so.6");
                 fn = APIUtil.apiGetFunctionAddress(libc, "sched_setaffinity");
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 Logger.error(e);
             }
             schedSetaffinity = fn;
